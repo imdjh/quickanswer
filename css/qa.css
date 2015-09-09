@@ -1,0 +1,53 @@
+body {
+    background-color: #b8bba4;
+}
+
+.vertical-container {
+    height: 100vh;
+    display: table;
+    vertical-align: middle;
+
+}
+.vertical-container-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#index-droparea {
+    width: 65%;
+    padding: 50px;
+    display: inline-block;
+    border: 2px dashed #666666;
+}
+
+#index-droparea > i{
+    font-size: 500%;
+}
+
+.doit-nav {
+    font-size: 500%;
+}
+
+#doit-q {
+    font-size: 150%;
+}
+
+.doit-qpanel {
+    height: 70vh;
+    border-color: black;
+    box-shadow: 0px 1px 10px #000;
+    background-color: transparent;
+}
+
+#doit-qnum {
+    font-size: 175%;
+}
+
+#doit-qc {
+    color: red;
+}
+
+.doit-answer {
+    font-size: 175%;
+    padding:0.5em  0.1em;
+}
