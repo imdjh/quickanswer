@@ -32,7 +32,7 @@ body {
     font-size: 500%;
 }
 
-#doit-q {
+.doit-q {
     font-size: 150%;
 }
 
@@ -57,4 +57,16 @@ body {
 .doit-answer {
     font-size: 175%;
     padding:0.5em  0.1em;
+}
+
+.result-toolset-right {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+
+.result-toolset-left {
+    position: fixed;
+    top: 0px;
+    left: 0px;
 }
