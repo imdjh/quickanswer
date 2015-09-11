@@ -36,8 +36,9 @@ body {
     font-size: 150%;
 }
 
-.doit-qpanel {
-    margin-bottom: 4em;
+#doit-qpanel {
+    margin-top: 2em;
+    margin-bottom: 3em;
     overflow-x: hidden;
     overflow-y: auto;
     height: 60vh;
@@ -69,4 +70,17 @@ body {
     position: fixed;
     top: 0px;
     left: 0px;
+}
+
+#error-banner {
+    width: 83%;
+}
+
+.error-text {
+    padding-top: 0.5em;
+    font-size: 200%;
+}
+
+.error-text a {
+    color: red;
 }

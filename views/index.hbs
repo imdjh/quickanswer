@@ -1,0 +1,29 @@
+<div class="container vertical-container">
+    <div class="row vertical-container-row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 text-center" id="index-droparea">
+                    <i class="glyphicon glyphicon-open-file"></i>
+
+                    <h1>将DOCX文件拖至此处</h1>
+                </div>
+            </div>
+            <div class="row" id="index-upload">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <form method="post" enctype="multipart/form-data" action="/api/updocx">
+                        <label>Select file: <input type="file" name="thedocx"></label>
+                        <input type="submit" value="upload">
+                    </form>
+                    <!-- make upload input field beautiful
+                    <div class="btn-group" role="group" aria-label="upload docx">
+                        <button type="button" class="btn btn-lg btn-primary" id="index-upload-help">
+                            <i class="glyphicon glyphicon-question-sign"></i>
+                        </button>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
