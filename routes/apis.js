@@ -12,14 +12,17 @@ var upload = multer({
     },
     fileFilter: function fileFilter(req, file, cb) {
         // Reject if not docx
-        if (file.mimetype != "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+        // Disable for now
+        if (file.mimetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
             cb(new Error('This is not a valid .docx File!'));
         } else {
             cb(null, true);
         }
+
     }
 });
 var router = express.Router();
+var approotPath = path.dirname(module.parent.filename);
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -29,16 +32,14 @@ router.get('/', function (req, res, next) {
 router.get('/json', function (req, res, next) {
     // return dummy JSON from ./contents/xxxx dir
     var qaID = req.query.n;
-    var c = fs.readFileSync(path.join(path.dirname(module.parent.filename), 'contents', qaID, 'qa.json'));
+    var c = fs.readFileSync(path.join(approotPath, 'contents', qaID.toString(), 'qa.json'));
     res.send(JSON.parse(c));
-
-    // res.status(501).end();                  // Not implemented
 });
 
 router.post('/updocx', upload.single('thedocx'), function (req, res, next) {
     var qaID = parseInt(Math.random() * 10000, 10);
     // rename uploaded file
-    var rename = 'mv ./uploading/' + req.file.filename + ' ./uploading/' + qaID;
+    var rename = 'mv ./uploading/' + req.file.filename + ' ./uploading/' + qaID + '.doc';
     var phase0 = exec(rename, function (err, stdout, stderr) {
         if (err) throw err;                                             // Failed to move file
         else {
@@ -53,16 +54,28 @@ router.post('/updocx', upload.single('thedocx'), function (req, res, next) {
 });
 
 function phasePandoc(qaID) {
-    // TODO: output spec_JSON to ./contents/xxxx dir  | it's 13-14 jobs
-    // output to ./contents/<qaID>
-    // var optionList = qaID;
-    // var pandoc = spawn('pandoc', [optionList]);
 
+    // TODO: remove hardcoded ``.doc''
+    argsUNOconv = ['-f', 'html', '-o', path.join(approotPath, 'contents', qaID.toString(), qaID + '.html'),
+        path.join(approotPath, 'uploading', qaID + '.doc')];
+    childUNOconv = spawn('/usr/bin/unoconv', argsUNOconv);
 
-    var pandoc = spawn('echo', [optionList]);
-    pandoc.stdout.on('end', function (d) {
-        console.log(qaID);                                              // End of pandoc phase
+    childUNOconv.on('close', function (code) {
+        execPandoc = '/usr/bin/pandoc -f html -t json' + ' ' + path.join(approotPath, 'contents', qaID.toString(),
+                qaID + '.html') + ' ' + '-o' + path.join(approotPath, 'contents', qaID.toString(), 'out.json');
+        console.log(execPandoc);
+        exec(execPandoc, function (err, stdout, stderr) {
+            if (err) throw err;
+            else {
+                var execFilter = 'python' + ' ' + path.join(approotPath, 'bin', 'myfilter.py');
+                console.log(execFilter);
+                optFilter = {"cwd": path.join(approotPath, 'contents', qaID.toString())};
+                exec(execFilter, optFilter);
+            }
+
+        });
     });
-}
+};
+
 
 module.exports = router;
