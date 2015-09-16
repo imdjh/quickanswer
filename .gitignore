@@ -1,2 +1,6 @@
 node_modules
 .idea/
+contents/**/*.html
+contents/**/qa.json
+contents/**/out.json
+uploading/*.doc

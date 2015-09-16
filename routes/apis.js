@@ -30,16 +30,21 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/json', function (req, res, next) {
-    // return dummy JSON from ./contents/xxxx dir
+    // http://<host>/api/json?n=<qaID>
     var qaID = req.query.n;
     var c = fs.readFileSync(path.join(approotPath, 'contents', qaID.toString(), 'qa.json'));
+// TODO: remove header
+res.setHeader(
+  'Content-Type', 'application/json');
+res.setHeader(
+  'Access-Control-Allow-Origin', '*' );
     res.send(JSON.parse(c));
 });
 
 router.post('/updocx', upload.single('thedocx'), function (req, res, next) {
     var qaID = parseInt(Math.random() * 10000, 10);
-    // rename uploaded file
-    var rename = 'mv ./uploading/' + req.file.filename + ' ./uploading/' + qaID + '.doc';
+    var rename = 'mv ./uploading/' + req.file.filename + ' ./uploading/' + qaID + '.doc';  // rename uploaded file
+
     var phase0 = exec(rename, function (err, stdout, stderr) {
         if (err) throw err;                                             // Failed to move file
         else {
@@ -54,21 +59,19 @@ router.post('/updocx', upload.single('thedocx'), function (req, res, next) {
 });
 
 function phasePandoc(qaID) {
-
     // TODO: remove hardcoded ``.doc''
     argsUNOconv = ['-f', 'html', '-o', path.join(approotPath, 'contents', qaID.toString(), qaID + '.html'),
         path.join(approotPath, 'uploading', qaID + '.doc')];
-    childUNOconv = spawn('/usr/bin/unoconv', argsUNOconv);
 
+    childUNOconv = spawn('/usr/bin/unoconv', argsUNOconv);
     childUNOconv.on('close', function (code) {
         execPandoc = '/usr/bin/pandoc -f html -t json' + ' ' + path.join(approotPath, 'contents', qaID.toString(),
                 qaID + '.html') + ' ' + '-o' + path.join(approotPath, 'contents', qaID.toString(), 'out.json');
-        console.log(execPandoc);
         exec(execPandoc, function (err, stdout, stderr) {
             if (err) throw err;
             else {
                 var execFilter = 'python' + ' ' + path.join(approotPath, 'bin', 'myfilter.py');
-                console.log(execFilter);
+                console.log('Successful generated, ID:' + qaID + ' !');
                 optFilter = {"cwd": path.join(approotPath, 'contents', qaID.toString())};
                 exec(execFilter, optFilter);
             }

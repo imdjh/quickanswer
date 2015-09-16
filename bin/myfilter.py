@@ -57,14 +57,15 @@ def phaseQA(k, v, fmt, meta):
             # ZhengZhi's answer layout
             r = re.findall(u'[A-D]', v[0])
             consA = ''.join(r)
-        if re.search(u'(\s)*\d(\s)*[\.)。/|\"].*', v[0]):
+        elif re.search(u'(\s)*\d(\s)*[\.)。/|\"].*', v[0]):
             # It's question, may multi lines
             phaseA = False
             consUnit = False
-            consQ['qc'] += v[0]
             r = re.split(u'[\.)。/|\"]', v[0].strip())
             consQ['qNum'] = r[0].strip()
-        if re.search(u'(\s)*[A-D](\s)*[\.)。/|\"].*', v[0]):
+            r.pop(0)
+            consQ['qc'] = ''.join(r)
+        elif re.search(u'(\s)*[A-D](\s)*[\.)。/|\"].*', v[0]):
             # It's answers, one at a time
             phaseA = True
             if re.search(u'(\s)*A(\s)*[\.)。/|"].*', v[0]):
@@ -75,7 +76,7 @@ def phaseQA(k, v, fmt, meta):
                 consQ['qa_3'] = v[0]
             if re.search(u'(\s)*D(\s)*[\.)。/|"].*', v[0]):
                 consQ['qa_4'] = v[0]
-        if not phaseA:
+        else:
             # Fallback if have multiline of question
             consUnit = False
             consQ['qc'] += v[0]
