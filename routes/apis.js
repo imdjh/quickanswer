@@ -12,7 +12,7 @@ var upload = multer({
     },
     fileFilter: function fileFilter(req, file, cb) {
         // Reject if not docx
-        // Disable for now
+        // Disable just now
         if (file.mimetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
             cb(new Error('This is not a valid .docx File!'));
         } else {
@@ -33,11 +33,13 @@ router.get('/json', function (req, res, next) {
     // http://<host>/api/json?n=<qaID>
     var qaID = req.query.n;
     var c = fs.readFileSync(path.join(approotPath, 'contents', qaID.toString(), 'qa.json'));
-// TODO: remove header
-res.setHeader(
-  'Content-Type', 'application/json');
-res.setHeader(
-  'Access-Control-Allow-Origin', '*' );
+    // DEBUG
+    /**
+     res.setHeader(
+     'Content-Type', 'application/json');
+     res.setHeader(
+     'Access-Control-Allow-Origin', '*');
+     */
     res.send(JSON.parse(c));
 });
 
@@ -51,11 +53,14 @@ router.post('/updocx', upload.single('thedocx'), function (req, res, next) {
             var mkdir = 'mkdir -p ./contents/' + qaID;
             exec(mkdir, function (err, stdout, stderr) {
                 if (err) throw err;                                     // Failed to create directory
-                else phasePandoc(qaID);                                 // If success, call pandoc
+                else {
+                    phasePandoc(qaID);                                   // If success, call pandoc
+                    res.redirect('../qa/' + qaID);
+                }
             });
         }
     });
-    res.end();                                                          // End of updocx
+    // res.end();                                                          // End of updocx
 });
 
 function phasePandoc(qaID) {
@@ -71,9 +76,9 @@ function phasePandoc(qaID) {
             if (err) throw err;
             else {
                 var execFilter = 'python' + ' ' + path.join(approotPath, 'bin', 'myfilter.py');
-                console.log('Successful generated, ID:' + qaID + ' !');
                 optFilter = {"cwd": path.join(approotPath, 'contents', qaID.toString())};
                 exec(execFilter, optFilter);
+                console.log('Successful generated, ID: ' + qaID + '!');
             }
 
         });

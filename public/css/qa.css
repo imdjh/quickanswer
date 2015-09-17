@@ -8,6 +8,7 @@ body {
     vertical-align: middle;
 
 }
+
 .vertical-container-row {
     display: table-cell;
     vertical-align: middle;
@@ -20,7 +21,7 @@ body {
     border: 2px dashed #666666;
 }
 
-#index-droparea > i{
+#index-droparea > i {
     font-size: 500%;
 }
 
@@ -38,7 +39,7 @@ body {
 
 #doit-qpanel {
     margin-top: 2em;
-    margin-bottom: 3em;
+    margin-bottom: 4em;
     overflow-x: hidden;
     overflow-y: auto;
     height: 60vh;
@@ -48,16 +49,22 @@ body {
 }
 
 #doit-qnum {
-    font-size: 175%;
+    font-size: 185%;
 }
 
 #doit-qc {
-    color: red;
+    // color: red;
+    font-size: 175%;
+    padding-left: 1em;
 }
 
 .doit-answer {
     font-size: 175%;
-    padding:0.5em  0.1em;
+    padding: 0.5em 0.1em;
+    border-radius: 4px;
+    border: 1px solid dimgrey;
+    box-shadow: 0px 1px 1.5px #000;
+    cursor: pointer;
 }
 
 .result-toolset-right {
@@ -72,15 +79,14 @@ body {
     left: 0px;
 }
 
-#error-banner {
-    width: 83%;
+.doit-onmouse {
+    background-color: darkslategrey;
 }
 
-.error-text {
-    padding-top: 0.5em;
-    font-size: 200%;
+.doit-answer-selected {
+    background-color: #0099CC;
 }
 
-.error-text a {
-    color: red;
+#doit-q {
+    font-size: 150%;
 }
