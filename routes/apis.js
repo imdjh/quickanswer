@@ -54,8 +54,8 @@ router.post('/updocx', upload.single('thedocx'), function (req, res, next) {
             exec(mkdir, function (err, stdout, stderr) {
                 if (err) throw err;                                     // Failed to create directory
                 else {
-                    phasePandoc(qaID);                                   // If success, call pandoc
-                    res.redirect('../qa/' + qaID);
+                    phasePandoc(qaID, res);                                   // If success, call pandoc
+
                 }
             });
         }
@@ -63,7 +63,7 @@ router.post('/updocx', upload.single('thedocx'), function (req, res, next) {
     // res.end();                                                          // End of updocx
 });
 
-function phasePandoc(qaID) {
+function phasePandoc(qaID, res) {
     // TODO: remove hardcoded ``.doc''
     argsUNOconv = ['-f', 'html', '-o', path.join(approotPath, 'contents', qaID.toString(), qaID + '.html'),
         path.join(approotPath, 'uploading', qaID + '.doc')];
@@ -79,6 +79,7 @@ function phasePandoc(qaID) {
                 optFilter = {"cwd": path.join(approotPath, 'contents', qaID.toString())};
                 exec(execFilter, optFilter);
                 console.log('Successful generated, ID: ' + qaID + '!');
+                res.redirect('../qa/' + qaID);
             }
 
         });

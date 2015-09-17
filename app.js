@@ -14,8 +14,7 @@ var app = express();
 // view engine setup
 var blocks = {};
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-hbs.registerPartials(path.join(__dirname, 'views', 'partial'));
+// app.set('view engine', 'hbs');
 
 var oneDay = 86400000;
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
