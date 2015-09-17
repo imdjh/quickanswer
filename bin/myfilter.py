@@ -64,18 +64,18 @@ def phaseQA(k, v, fmt, meta):
             r = re.split(u'[\.)。/|\"]', v[0].strip())
             consQ['qNum'] = r[0].strip()
             r.pop(0)
-            consQ['qc'] = ''.join(r)
+            consQ['qc'] = ''.join(r).strip()
         elif re.search(u'(\s)*[A-D](\s)*[\.)。/|\"].*', v[0]):
             # It's answers, one at a time
             phaseA = True
             if re.search(u'(\s)*A(\s)*[\.)。/|"].*', v[0]):
-                consQ['qa_1'] = v[0]
+                consQ['qa_1'] = v[0].strip()
             if re.search(u'(\s)*B(\s)*[\.)。/|"].*', v[0]):
-                consQ['qa_2'] = v[0]
+                consQ['qa_2'] = v[0].strip()
             if re.search(u'(\s)*C(\s)*[\.)。/|"].*', v[0]):
-                consQ['qa_3'] = v[0]
+                consQ['qa_3'] = v[0].strip()
             if re.search(u'(\s)*D(\s)*[\.)。/|"].*', v[0]):
-                consQ['qa_4'] = v[0]
+                consQ['qa_4'] = v[0].strip()
         else:
             # Fallback if have multiline of question
             consUnit = False
