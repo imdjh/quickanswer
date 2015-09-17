@@ -28,7 +28,6 @@ function rendereverything() {
             window.jsonCurr['isright'] = true;
         }
     }
-
     objLeft = {"navContent": "<a href=\"#{0}\" id=\"doit-goleft\"><i class=\"glyphicon glyphicon-chevron-left\"></i></a>".format(window.curr - 1)};
     objRight = {"navContent": "<a href=\"#{0}\" id=\"doit-goright\"><i class=\"glyphicon glyphicon-chevron-right\"></i></a>".format(window.curr + 1)};
 
@@ -42,4 +41,16 @@ function rendereverything() {
     $('#nav-left').html(render_hbsNav(objLeft));
     $('#nav-right').html(render_hbsNav(objRight));
     $('#content-quickanswer').html(render_hbsContent(window.jsonCurr));
+
+    // If has multiply answers, add misc
+    if (window.jsonCurr.a.length != 1) {
+        var qn = $('#doit-qnum').text();
+        $('#doit-qnum').html(qn + '&nbsp;<span class="label label-success" style="font-size: 30%;">【多选】</span>'); // add label
+        var qc = $('#doit-qc').text();
+        chkAnswerButton = '&nbsp;<button class="btn btn-warning btn-lg" title="你认为做好这题了, 就点我检查答案吧! =D" id="doit-multi-confirm">确认点我</button>';
+        $('#doit-qc').html(qc + chkAnswerButton); // add check answer button
+        $('#doit-multi-confirm').click(function () {
+            checkanswers(window.stringAnswers);
+        });
+    }
 }

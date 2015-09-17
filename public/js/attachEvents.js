@@ -57,7 +57,6 @@ function attachEvents() {
                         stringAnswer = 'D';
                         break;
                 }
-
                 if ($(this).hasClass('doit-answer-selected')) {
                     // Removing already selected
                     $(this).removeClass('doit-answer-selected');
@@ -72,18 +71,11 @@ function attachEvents() {
                         });
                         $(this).addClass('doit-answer-selected');
                         window.stringAnswers = stringAnswer;
+                        checkanswers(window.stringAnswers);
                     }
                 }
-
-
             } else {
                 alert("Wrong doit-answer elementID")
-            }
-
-
-            var countCurrAnswers = $('.doit-answer-selected').length;
-            if (countCurrAnswers >= window.jsonCurr.a.length) {
-                checkanswers(window.stringAnswers);
             }
         });
     });

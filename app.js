@@ -1,9 +1,6 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var hbs = require('hbs');
 
 var index = require('./routes/index');
 var apis = require('./routes/apis');
@@ -13,14 +10,9 @@ var app = express();
 
 // view engine setup
 var blocks = {};
-app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'hbs');
-
 var oneDay = 86400000;
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+
 app.use(express.static(path.join(__dirname, 'public'), {maxAge: oneDay}));
 
 // Magic global
@@ -35,7 +27,17 @@ global.options = {
 };
 
 // No, I am not developing
-// app.set('env', 'development');
+/**
+ var logger = require('morgan');
+ var bodyParser = require('body-parser');
+ var hbs = require('hbs');
+
+ app.set('env', 'development');
+ app.set('views', path.join(__dirname, 'views'));
+ app.use(logger('dev'));
+ app.use(bodyParser.json());
+ app.use(bodyParser.urlencoded({extended: false}));
+ */
 
 // Sequence is important
 app.use('/api', apis);

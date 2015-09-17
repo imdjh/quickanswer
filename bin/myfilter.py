@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# encoding: utf-8
+
 from pandocfilters import walk, stringify, Para
 import re
 import json
@@ -62,7 +64,7 @@ def phaseQA(k, v, fmt, meta):
             phaseA = False
             consUnit = False
             r = re.split(u'[\.)。/|\"]', v[0].strip())
-            consQ['qNum'] = r[0].strip()
+            consQ['qNum'] = r[0].strip() + "."      # add delimiter
             r.pop(0)
             consQ['qc'] = ''.join(r).strip()
         elif re.search(u'(\s)*[A-D](\s)*[\.)。/|\"].*', v[0]):
