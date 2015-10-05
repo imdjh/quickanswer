@@ -1,7 +1,7 @@
 FROM base/archlinux
 Maintainer Jiahao <dyejarhoo@gmail.com>
 
-RUN pacman -Sy && \
+RUN yes | pacman -Syu && \
         pacman -S libreoffice-fresh && \
         rm -rf /var/lib/pacman && \
         rm -rf /var/cache/pacman
