@@ -15,6 +15,7 @@ RUN cabal update && \
 # Install libreoffice fresh
 RUN cd /var/tmp && \
         curl -fsSL -O http://download.documentfoundation.org/libreoffice/stable/5.0.2/deb/x86_64/LibreOffice_5.0.2_Linux_x86-64_deb.tar.gz && \
+        tar -xf *.gz && \
         cd *_deb/DEBS && \
         dpkg -i *.deb && \
         rm -rf /var/tmp/*
