@@ -27,6 +27,7 @@ RUN curl -o /usr/bin/unoconv https://github.com/dagwieers/unoconv/raw/master/uno
 RUN pip install pandocfilters
 
 COPY . /srv/quickanswer
+WORKDIR /srv/quickanswer
 RUN npm install
 
 CMD ["node", "bin/www"]
