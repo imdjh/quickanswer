@@ -5,7 +5,7 @@ ENV LANG C.UTF-8
 # Install pandoc
 RUN apt-get update && \
         apt-get upgrade -y && \
-        apt-get install -y cabal-install && \
+        apt-get install -y cabal-install python-pip && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
@@ -23,6 +23,10 @@ RUN cd /var/tmp && \
 RUN curl -o /usr/bin/unoconv https://github.com/dagwieers/unoconv/raw/master/unoconv && \
         chmod +x /usr/bin/unoconv
 
+# Install python package pandocfilters
+RUN pip install pandocfilters
 
 COPY . /srv/quickanswer
+RUN npm install
 
+CMD ["node", "bin/www"]
