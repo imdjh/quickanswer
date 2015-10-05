@@ -1,6 +1,7 @@
 FROM node:0.10.40
 Maintainer Jiahao <dyejarhoo@gmail.com>
 
+ENV LANG C.UTF-8
 # Install pandoc
 RUN apt-get update && \
         apt-get upgrade -y && \
