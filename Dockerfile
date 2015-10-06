@@ -9,6 +9,7 @@ RUN apt-get update && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
+ENV PATH /root/.cabal/bin:$PATH
 RUN cabal update && \
         cabal install pandoc pandoc-types
 
@@ -30,4 +31,7 @@ COPY . /srv/quickanswer
 WORKDIR /srv/quickanswer
 RUN npm install
 
-CMD ["node", "bin/www"]
+EXPOSE 8080
+
+ENTRYPOINT ["/bin/bash"]
+CMD ["run.sh"]

@@ -68,9 +68,9 @@ function phasePandoc(qaID, res) {
     argsUNOconv = ['-f', 'html', '-o', path.join(approotPath, 'contents', qaID.toString(), qaID + '.html'),
         path.join(approotPath, 'uploading', qaID + '.doc')];
 
-    childUNOconv = spawn('/usr/bin/unoconv', argsUNOconv);
+    childUNOconv = spawn('unoconv', argsUNOconv);
     childUNOconv.on('close', function (code) {
-        execPandoc = '/usr/bin/pandoc -f html -t json' + ' ' + path.join(approotPath, 'contents', qaID.toString(),
+        execPandoc = 'pandoc -f html -t json' + ' ' + path.join(approotPath, 'contents', qaID.toString(),
                 qaID + '.html') + ' ' + '-o' + path.join(approotPath, 'contents', qaID.toString(), 'out.json');
         exec(execPandoc, function (err, stdout, stderr) {
             if (err) throw err;
