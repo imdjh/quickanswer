@@ -15,13 +15,12 @@ RUN cabal update && \
 
 # Install libreoffice fresh
 RUN cd /var/tmp && \
-        curl -fsSL -O http://download.documentfoundation.org/libreoffice/stable/5.0.2/deb/x86_64/LibreOffice_5.0.2_Linux_x86-64_deb.tar.gz && \
+        curl -fsSL -O dhttp://download.documentfoundation.org/libreoffice/stable/5.2.5/deb/x86_64/LibreOffice_5.2.5_Linux_x86-64_deb.tar.gz && \
         tar -xf *.gz && \
         cd *_deb/DEBS && \
         dpkg -i *.deb && \
-        rm -rf /var/tmp/*
-
-RUN curl -o /usr/bin/unoconv https://github.com/dagwieers/unoconv/raw/master/unoconv && \
+        rm -rf /var/tmp/* && \
+        curl -o /usr/bin/unoconv https://github.com/dagwieers/unoconv/raw/master/unoconv && \
         chmod +x /usr/bin/unoconv
 
 # Install python package pandocfilters
