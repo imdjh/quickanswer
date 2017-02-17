@@ -1,4 +1,4 @@
-FROM node:0.10.40
+FROM node:6
 Maintainer Jiahao <dyejarhoo@gmail.com>
 
 ENV LANG C.UTF-8
