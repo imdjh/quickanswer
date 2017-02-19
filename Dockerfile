@@ -5,7 +5,7 @@ ENV LANG C.UTF-8
 # Install pandoc
 RUN apt-get update && \
         apt-get upgrade -y && \
-        apt-get install -y cabal-install python-pip && \
+        apt-get install -y cabal-install python-pip libdbus-glib-1-2-dbg libgl1-mesa-dev libcups2-dev && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
